@@ -1,6 +1,6 @@
 # 템플릿 모음
 
-study가 문서 레포를 세팅할 때 사용하는 골격. `<...>`는 실제 값으로 치환한다.
+docs가 문서 레포를 세팅할 때 사용하는 골격. `<...>`는 실제 값으로 치환한다.
 주제·상황에 맞게 가감하되, 작성 원칙(SKILL.md)을 유지한다.
 
 ---
@@ -105,7 +105,7 @@ study가 문서 레포를 세팅할 때 사용하는 골격. `<...>`는 실제 �
 
 ## CLAUDE.md 템플릿
 
-이 문서 레포에서 이후 작업할 때 따를 규칙. (study 자체의 작성 원칙을 레포에 명문화)
+이 문서 레포에서 이후 작업할 때 따를 규칙. (docs 자체의 작성 원칙을 레포에 명문화)
 
 ```markdown
 # CLAUDE.md
@@ -167,7 +167,7 @@ git add 01-overview.md
 git commit -m "docs: <주제> 개요 문서 추가"
 
 # user 미설정 시 전역 설정을 바꾸지 않고 우회 커밋
-git -c user.name="study" -c user.email="docs@local" \
+git -c user.name="docs" -c user.email="docs@local" \
     commit -m "docs: <주제> 개요 문서 추가"
 
 # 최종 확인

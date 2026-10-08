@@ -1,12 +1,12 @@
 ---
-name: study
-description: 기술 주제 하나를 받아 개념·사용법·이슈를 번호 매긴 Markdown 문서들로 정리한 docs 레포를 빈 디렉토리에 만든다. 문서별로 한글 커밋(git)하고, 비교표 중심 README와 컨벤션 CLAUDE.md를 세팅하고, 필요하면 사용자 확인을 받아 코드 예제를 작성한 뒤 산출물을 검증·보완한다. `/common:study`로 명시적으로 호출했을 때만 사용한다. 자동으로 트리거하지 않는다.
+name: docs
+description: 기술 주제 하나를 받아 개념·사용법·이슈를 번호 매긴 Markdown 문서들로 정리한 docs 레포를 빈 디렉토리에 만든다. 문서별로 한글 커밋(git)하고, 비교표 중심 README와 컨벤션 CLAUDE.md를 세팅하고, 필요하면 사용자 확인을 받아 코드 예제를 작성한 뒤 산출물을 검증·보완한다. `/study:docs`로 명시적으로 호출했을 때만 사용한다. 자동으로 트리거하지 않는다.
 user-invocable: true
 disable-model-invocation: true
 allowed-tools: Read, Write, Edit, Bash, AskUserQuestion, WebSearch, WebFetch, mcp__context7__resolve-library-id, mcp__context7__query-docs
 ---
 
-# study
+# docs
 
 기술 주제 하나를 받아 그것에 대한 **개념·사용법·이슈**를 번호 매긴 Markdown 문서로 정리한 docs 레포를 만든다.
 비교표 중심 `README.md`와 작성 컨벤션 `CLAUDE.md`를 세팅하고, git을 초기화해 **문서 단위로 한글 커밋**한다.

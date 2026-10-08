@@ -8,9 +8,9 @@
   },
   "plugins": [
     {
-      "name": "common",
-      "source": "./plugins/common",
-      "description": "개인용 Claude Code 스킬 모음 플러그인"
+      "name": "study",
+      "source": "./plugins/study",
+      "description": "기술 주제 학습 스킬 — 문서 정리(docs), 토이 프로젝트(toy)"
     }
   ]
 }

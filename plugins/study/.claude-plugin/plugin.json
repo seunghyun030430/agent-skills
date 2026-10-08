@@ -1,0 +1,15 @@
+{
+  "name": "study",
+  "description": "기술 주제 학습 스킬 모음. 문서로 정리하는 docs, 직접 만들어 보는 toy.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Seunghyun Lee"
+  },
+  "license": "MIT",
+  "keywords": [
+    "study",
+    "learning",
+    "docs",
+    "toy"
+  ]
+}

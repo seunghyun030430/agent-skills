@@ -1,6 +1,6 @@
 ---
 name: toy
-description: 기술 주제 하나를 받아 직접 만들고 돌려 보며 체득하는 토이 프로젝트를 빈 디렉토리에 만든다. 학습 목표와 스택을 정하고, 개념 하나씩 다루는 실행 가능한 마일스톤으로 쪼개 구현·실행·관찰하며, "일부러 깨뜨려 보기" 실험을 반드시 포함한다. Claude가 구현하는 데모 모드와 사용자가 TODO를 채우는 가이드 모드 중 선택한다. 마일스톤별로 커밋한다. `/common:toy`로 명시적으로 호출했을 때만 사용한다. 자동으로 트리거하지 않는다.
+description: 기술 주제 하나를 받아 직접 만들고 돌려 보며 체득하는 토이 프로젝트를 빈 디렉토리에 만든다. 학습 목표와 스택을 정하고, 개념 하나씩 다루는 실행 가능한 마일스톤으로 쪼개 구현·실행·관찰하며, "일부러 깨뜨려 보기" 실험을 반드시 포함한다. Claude가 구현하는 데모 모드와 사용자가 TODO를 채우는 가이드 모드 중 선택한다. 마일스톤별로 커밋한다. `/study:toy`로 명시적으로 호출했을 때만 사용한다. 자동으로 트리거하지 않는다.
 user-invocable: true
 disable-model-invocation: true
 allowed-tools: Read, Write, Edit, Bash, AskUserQuestion, WebSearch, WebFetch, mcp__context7__resolve-library-id, mcp__context7__query-docs
@@ -9,7 +9,7 @@ allowed-tools: Read, Write, Edit, Bash, AskUserQuestion, WebSearch, WebFetch, mc
 # toy
 
 기술 주제 하나를 받아 **직접 만들고 실행하며 체득하는 작은 프로젝트**를 만든다.
-문서로 이해하는 것은 `study` 스킬의 몫이고, 이 스킬은 **돌아가는 코드와 관찰한 사실**을 남긴다.
+문서로 이해하는 것은 `docs` 스킬(`/study:docs`)의 몫이고, 이 스킬은 **돌아가는 코드와 관찰한 사실**을 남긴다.
 
 산출물은 **항상 현재 작업 디렉토리**에 만든다. 별도 경로로 옮기지 않는다.
 
@@ -19,9 +19,9 @@ allowed-tools: Read, Write, Edit, Bash, AskUserQuestion, WebSearch, WebFetch, mc
 - 일부러 깨뜨려 봐야 이해한 것이다.
 - 각 단계에서 애매하면 추측하지 말고 사용자에게 물어본다.
 
-## study와의 차이
+## docs와의 차이
 
-| 항목 | study | toy |
+| 항목 | docs | toy |
 | --- | --- | --- |
 | 산출물 | 번호 매긴 학습 문서 | 실행되는 프로젝트 + 마일스톤별 관찰 노트 |
 | 최우선 가치 | 출처·정확성 | 실제로 돌아감·손으로 확인 |
@@ -100,7 +100,7 @@ allowed-tools: Read, Write, Edit, Bash, AskUserQuestion, WebSearch, WebFetch, mc
    - 무엇이 나왔나(핵심 출력 발췌)
    - 왜 그렇게 동작하나(해석, 근거 링크)
    - 예상과 달랐던 점
-   - 개념 설명은 길게 쓰지 않는다. 필요하면 공식 문서나 `study` 문서로 링크한다.
+   - 개념 설명은 길게 쓰지 않는다. 필요하면 공식 문서나 `docs` 스킬로 만든 문서로 링크한다.
 4. **README 갱신**: 마일스톤 표의 상태를 ✅로 바꾼다.
 5. **커밋**: 그 마일스톤 관련 파일만 스테이징한다. 예: `feat: M2 consumer group 리밸런싱 구현`, 가이드 모드 뼈대는 `chore: M2 과제 뼈대 추가`.
 
