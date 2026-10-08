@@ -1,0 +1,16 @@
+{
+  "name": "agent-skills",
+  "owner": {
+    "name": "Seunghyun Lee"
+  },
+  "metadata": {
+    "description": "개인용 Claude Code 스킬 마켓플레이스"
+  },
+  "plugins": [
+    {
+      "name": "common",
+      "source": "./plugins/common",
+      "description": "개인용 Claude Code 스킬 모음 플러그인"
+    }
+  ]
+}

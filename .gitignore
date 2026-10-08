@@ -1,0 +1,5 @@
+# macOS
+.DS_Store
+
+# Claude Code 로컬 설정 (개인 환경/권한 — 레포에 올리지 않음)
+.claude/
