@@ -7,7 +7,7 @@
 Claude Code 세션에서 아래를 순서대로 실행한다.
 
 ```
-/plugin marketplace add <github-owner>/agent-skills
+/plugin marketplace add seunghyun030430/agent-skills
 ```
 
 ```
