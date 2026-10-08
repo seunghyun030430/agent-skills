@@ -16,7 +16,7 @@
 ```
 .
 ├── .claude-plugin/
-│   └── marketplace.json              # 마켓플레이스 카탈로그 (name: agent-skills)
+│   └── marketplace.json              # 마켓플레이스 카탈로그 (name: seunghyun-skills — 레포 이름 agent-skills는 Anthropic 예약 이름이라 마켓플레이스 이름으로 쓸 수 없음)
 └── plugins/
     └── <category>/                   # 예: study
         ├── .claude-plugin/
@@ -44,7 +44,7 @@
 2. `plugins/<new-category>/skills/<skill>/SKILL.md` 작성.
 3. `.claude-plugin/marketplace.json`의 `plugins` 배열에 `{ "name": "<new-category>", "source": "./plugins/<new-category>", "description": "..." }` 추가.
 4. `README.md`에 분류 섹션 추가, 이 문서의 분류 표 갱신.
-5. `claude plugin validate .` → 커밋·푸시. 사용자는 `/plugin install <new-category>@agent-skills`로 설치한다.
+5. `claude plugin validate .` → 커밋·푸시. 사용자는 `/plugin install <new-category>@seunghyun-skills`로 설치한다.
 
 분류 이름은 짧은 소문자 명사로 짓는다(예: `study`, `review`, `ops`). 스킬이 한두 개뿐인 분류를 남발하지 말고, 성격이 겹치면 기존 분류에 넣는다.
 

@@ -11,7 +11,7 @@ Claude Code 세션에서 아래를 순서대로 실행한다.
 ```
 
 ```
-/plugin install study@agent-skills
+/plugin install study@seunghyun-skills
 ```
 
 분류(플러그인)별로 필요한 것만 설치한다. 설치 후 새 세션부터 스킬이 인식된다. 이미 추가한 마켓플레이스를 갱신하려면 `/plugin marketplace update`.
