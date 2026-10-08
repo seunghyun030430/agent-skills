@@ -1,7 +1,7 @@
 {
   "name": "common",
   "description": "개인용 Claude Code 스킬 모음 플러그인.",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": { "name": "Seunghyun Lee" },
   "license": "MIT",
   "keywords": ["common", "skills", "personal"]
