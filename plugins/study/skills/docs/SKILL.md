@@ -1,6 +1,6 @@
 ---
 name: docs
-description: 기술 주제 하나를 받아 개념·사용법·이슈를 번호 매긴 Markdown 문서들로 정리한 docs 레포를 빈 디렉토리에 만든다. 문서별로 한글 커밋(git)하고, 비교표 중심 README와 컨벤션 CLAUDE.md를 세팅하고, 필요하면 사용자 확인을 받아 코드 예제를 작성한 뒤 산출물을 검증·보완한다. `/study:docs`로 명시적으로 호출했을 때만 사용한다. 자동으로 트리거하지 않는다.
+description: 기술 주제 하나를 받아 개념·사용법·이슈를 번호 매긴 Markdown 문서들로 정리한 docs 레포를 빈 디렉토리에 만든다. study-docs 같은 문서 모노레포 안에서 호출하면 그 레포에 주제 디렉토리를 추가한다. 문서별로 한글 커밋(git)하고, 비교표 중심 README와 컨벤션 CLAUDE.md를 세팅하고, 필요하면 사용자 확인을 받아 코드 예제를 작성한 뒤 산출물을 검증·보완한다. `/study:docs`로 명시적으로 호출했을 때만 사용한다. 자동으로 트리거하지 않는다.
 user-invocable: true
 disable-model-invocation: true
 allowed-tools: Read, Write, Edit, Bash, AskUserQuestion, WebSearch, WebFetch, mcp__context7__resolve-library-id, mcp__context7__query-docs
@@ -12,10 +12,28 @@ allowed-tools: Read, Write, Edit, Bash, AskUserQuestion, WebSearch, WebFetch, mc
 비교표 중심 `README.md`와 작성 컨벤션 `CLAUDE.md`를 세팅하고, git을 초기화해 **문서 단위로 한글 커밋**한다.
 필요하면 사용자 확인을 받아 코드 예제까지 만들고, 산출물이 올바른지 검증·보완한다.
 
-문서는 **항상 현재 작업 디렉토리**에 만든다. 별도 경로로 옮기지 않는다.
+문서는 **단독 레포 모드에서는 현재 작업 디렉토리**에, **모노레포 모드에서는 `<모노레포 루트>/<주제-slug>/`**에 만든다. 그 밖의 경로로 옮기지 않는다.
 
 핵심 태도: 사실 기반으로 쓰고, 모르면 "확인 필요"라고 명시하고, 임의로 문서를 양산하지 않는다.
 각 단계에서 애매하면 추측하지 말고 사용자에게 물어본다.
+
+## 모드: 단독 레포 vs 모노레포
+
+2단계에서 아래 기준으로 모드를 정하고, 이후 단계는 모드별 지시를 따른다.
+
+| 항목 | 단독 레포 모드 (기본) | 모노레포 모드 |
+| --- | --- | --- |
+| 판별 | 아래 모노레포 조건에 해당하지 않음 | git 루트의 `CLAUDE.md`에 표식 `<!-- study-docs:monorepo -->`가 있음 |
+| 문서 위치 | 현재 디렉토리 | `<루트>/<주제-slug>/` (현재 디렉토리가 루트면 slug 디렉토리를 새로 만들고, 이미 slug 디렉토리 안이면 그곳) |
+| `git init` | 레포가 아니면 실행 | **실행하지 않음** |
+| `CLAUDE.md` | 작성 원칙 전체를 명문화 | 주제 디렉토리에 **주제 전용 규칙만**(범위·선택 스택·예외). 공통 규칙은 루트 `CLAUDE.md`에 있으므로 반복하지 않음 |
+| README | 주제 README | 주제 README + **루트 README 주제 인덱스에 한 줄 추가** |
+| 커밋 메시지 | `docs: <설명>` | 주제 안: `docs(<주제-slug>): <설명>`, 루트 파일: `docs: <설명>` |
+| push | 원격이 있으면 확인 후 | 원격이 있으면 확인 후 |
+
+- 루트 `CLAUDE.md`의 규칙이 이 스킬의 기본 규칙과 다르면 **루트 규칙을 우선**한다.
+- 주제 slug는 소문자 kebab-case로 정하고(벤더 접두사 포함, 예: `aws-systems-manager`, `istio`, `spring-boot`), 1단계에서 주제와 함께 되읽어 확정한다.
+- 같은 slug 디렉토리가 이미 있으면 덮어쓰지 말고 보고한 뒤 이어서 작업할지 확인한다.
 
 ## 워크플로
 
@@ -38,7 +56,9 @@ allowed-tools: Read, Write, Edit, Bash, AskUserQuestion, WebSearch, WebFetch, mc
 - 현재 디렉토리를 대상으로 한다. `pwd`로 위치를 보여주고 여기에 만들 것임을 알린다.
 - `ls -A`로 기존 파일 확인. 덮어쓸 수 있는 파일(`README.md`, `CLAUDE.md`, 같은 이름 문서)이 이미 있으면 **반드시 먼저 보고하고 확인**을 받는다. 그냥 덮어쓰지 않는다.
 - git 상태를 점검한다:
-  - `git rev-parse --show-toplevel 2>/dev/null` — 결과가 **현재 디렉토리와 다르면** 상위 레포의 하위에 있는 것이다. 이때는 사용자에게 "상위 레포에 커밋할지 / 여기서 새로 `git init` 할지" 묻는다. 의도치 않게 부모 레포에 섞지 않는다.
+  - `git rev-parse --show-toplevel 2>/dev/null`로 git 루트를 구한 뒤, 루트의 `CLAUDE.md`에 `<!-- study-docs:monorepo -->` 표식이 있는지 본다(`grep -q 'study-docs:monorepo' "$ROOT/CLAUDE.md"`).
+    - **표식이 있으면 모노레포 모드**다. 묻지 않고 그 레포에 커밋한다. 주제 디렉토리 경로(`<루트>/<slug>/`)를 알리고, 루트 `CLAUDE.md`를 읽어 규칙을 확인한다.
+    - 표식이 없는데 루트가 **현재 디렉토리와 다르면** 상위 레포의 하위에 있는 것이다. 이때는 사용자에게 "상위 레포에 커밋할지 / 여기서 새로 `git init` 할지" 묻는다. 의도치 않게 부모 레포에 섞지 않는다.
   - git 레포가 아니면 4단계 직전에 `git init -b main` 한다고 알린다.
   - 이미 레포면 `git status --short`로 기존 staged/dirty 변경을 확인한다. 무관한 변경이 있으면 보고하고 건드리지 않는다(이 스킬은 자기가 만든 파일만 스테이징).
 - **git 사용자 설정 확인**: `git config user.name`과 `git config user.email`. 둘 중 하나라도 없으면 커밋이 실패하므로, 사용자에게 값을 묻거나(설정해도 되는지 확인 후 `git config`) 매 커밋을 `git -c user.name=... -c user.email=...`로 우회한다. 임의로 전역 설정을 바꾸지 않는다.
@@ -60,6 +80,7 @@ allowed-tools: Read, Write, Edit, Bash, AskUserQuestion, WebSearch, WebFetch, mc
 - `CLAUDE.md`를 먼저 만든다: 레포 목적 + 작성 컨벤션(아래 **작성 원칙**을 명문화). 골격은 `templates.md`.
 - 커밋: `git add CLAUDE.md` → `git commit -m "docs: CLAUDE.md 작성 규칙 추가"`. 이게 최초 커밋이 된다.
 - 컨벤션을 먼저 박아두면 이후 문서가 일관된 형식을 따른다.
+- **모노레포 모드**: `git init`은 하지 않는다. `<slug>/CLAUDE.md`에 루트 규칙 참조 + 주제 범위 + 주제 전용 규칙만 적는다(`templates.md`의 "주제 CLAUDE.md" 골격). 커밋: `git add <slug>/CLAUDE.md` → `git commit -m "docs(<slug>): CLAUDE.md 주제 규칙 추가"`.
 
 ### 5. 문서 차례대로 작성 + 문서별 커밋
 
@@ -68,7 +89,7 @@ allowed-tools: Read, Write, Edit, Bash, AskUserQuestion, WebSearch, WebFetch, mc
 - 사실 주장은 출처를 확인하고 URL을 단다. 라이브러리/프레임워크/SDK/CLI는 `context7` MCP(`resolve-library-id` → `query-docs`)를 우선 사용하고, **context7가 없거나 해당 라이브러리가 없으면 `WebSearch`/`WebFetch`로 폴백**한다.
 - 확신이 없으면 단정하지 말고 "확인 필요" 또는 "모름"으로 표기한다.
 - **작성 원칙**과 **문서 구성 골격**(아래)을 지킨다.
-- 문서별 커밋: `git add <그 문서 파일만>` → `git commit -m "docs: <주제> <문서명> 추가"`. **커밋 규칙**(아래) 참고.
+- 문서별 커밋: `git add <그 문서 파일만>` → `git commit -m "docs: <주제> <문서명> 추가"` (모노레포 모드: `docs(<slug>): <문서명> 추가`). **커밋 규칙**(아래) 참고.
 
 ### 6. 코드 예제 (필요 시)
 
@@ -78,13 +99,16 @@ allowed-tools: Read, Write, Edit, Bash, AskUserQuestion, WebSearch, WebFetch, mc
 - `examples/`에 실행 가능한 파일로 두거나, 짧으면 해당 문서 내 코드블록으로 넣는다. 언어를 코드펜스에 명시한다.
 - 예제는 최소·실행 가능하게. 의존성/실행법을 한 줄로 적어 둔다.
 - 언어에 따라 빌드 산출물이 생기면(`node_modules`, `__pycache__`, 빌드 폴더 등) 그에 맞는 `.gitignore`도 함께 둔다.
-- `examples/` 파일도 `docs:` 프리픽스로, 관련 문서와는 **별도 커밋**한다. 예: `docs: <주제> 사용 예제 코드 추가`.
+- `examples/` 파일도 `docs:` 프리픽스로, 관련 문서와는 **별도 커밋**한다. 예: `docs: <주제> 사용 예제 코드 추가` (모노레포 모드: `docs(<slug>): 사용 예제 코드 추가`, 예제는 `<slug>/examples/`에 둔다).
 
 ### 7. README.md 작성·커밋
 
 - `README.md`: 한눈 비교/요약 표 + 문서 인덱스(각 문서로의 링크와 한 줄 설명) + 1차 출처 모음 + 조사 기준일(절대 날짜).
 - 여러 대상을 디렉토리로 나눈 경우 인덱스 링크 경로를 `./<대상>/0N-*.md`로 정확히 적는다.
 - 커밋: `git add README.md` → `git commit -m "docs: README 인덱스 추가"`.
+- **모노레포 모드**:
+  - 주제 README 커밋: `git add <slug>/README.md` → `git commit -m "docs(<slug>): README 인덱스 추가"`.
+  - 이어서 **루트 `README.md`의 주제 인덱스 표에 한 줄**(링크 `./<slug>/README.md`, 한 줄 설명, 조사 기준일)을 추가하고 별도 커밋: `git commit -m "docs: <slug> 주제 인덱스 추가"`. 루트 README에 인덱스 표가 없으면 기존 형식을 보고하고 어디에 넣을지 확인한다.
 
 ### 8. 산출물 검증 + 보완 (반드시 수행)
 
@@ -92,7 +116,7 @@ allowed-tools: Read, Write, Edit, Bash, AskUserQuestion, WebSearch, WebFetch, mc
 
 - **문서 검증**
   - 사실 주장이 단 출처와 실제로 일치하는지 1차 출처를 다시 확인한다(특히 숫자·버전·API 이름).
-  - 내부 링크 확인: `README` → 각 문서, 문서 → 문서 상대경로가 **실제 파일을 가리키는가**. (디렉토리 분리 케이스의 경로 특히 주의)
+  - 내부 링크 확인: `README` → 각 문서, 문서 → 문서 상대경로가 **실제 파일을 가리키는가**. (디렉토리 분리 케이스의 경로 특히 주의. 모노레포 모드면 루트 README → `<slug>/README.md` 링크도 확인)
   - 표/숫자/용어의 문서 간 일관성, 제목 계층(`#`→`##`→`###`) 준수, "확인 필요" 표기 누락 점검.
 - **코드 예제 검증**
   - 가능하면 실제로 실행하거나 문법/타입 검사·린트를 돌린다(해당 언어 런타임·린터 사용).
@@ -103,9 +127,10 @@ allowed-tools: Read, Write, Edit, Bash, AskUserQuestion, WebSearch, WebFetch, mc
 
 ### 9. git 마무리
 
-- 커밋 메시지는 전부 `docs: <한글 설명>` 형식이어야 한다.
+- 커밋 메시지는 전부 `docs: <한글 설명>` 형식이어야 한다(모노레포 모드의 주제 커밋은 `docs(<slug>): <한글 설명>`).
 - 커밋이 실패하면(예: pre-commit hook 거부, 설정 누락) 그대로 진행하지 말고 원인을 보고하고 사용자에게 확인한다.
-- 마지막에 `git log --oneline`을 보여주고 전체 결과를 요약한다.
+- 마지막에 `git log --oneline`을 보여주고 전체 결과를 요약한다. 모노레포 모드면 이번 주제 커밋만 보이도록 `git log --oneline -- <slug> README.md`를 쓴다.
+- **push**: `git remote -v`로 원격이 있으면 "push할까요?"를 묻고, 승인받았을 때만 `git push`한다. 원격이 없으면 push 단계는 건너뛴다. 원격 레포 생성·공개 범위 변경은 이 스킬이 하지 않는다.
 
 ## 작성 원칙
 
@@ -151,6 +176,9 @@ allowed-tools: Read, Write, Edit, Bash, AskUserQuestion, WebSearch, WebFetch, mc
   - 예: `docs: NestJS DI 개요 문서 추가`
   - 예: `docs: 사용법 문서 보완`
   - 예: `docs: README 인덱스 추가`
+- 모노레포 모드에서는 주제 디렉토리 안의 변경에 scope를 붙인다: `docs(<slug>): <설명>`. 루트 파일(루트 `CLAUDE.md`·`README.md`) 변경은 scope 없이 `docs: <설명>`.
+  - 예: `docs(istio): 트래픽 관리 문서 추가`
+  - 예: `docs: istio 주제 인덱스 추가`
 - 커밋 메시지에 별도 서명/푸터를 넣지 않는다(결과물은 문서 레포이므로 간결하게).
 - git user.name/email이 없으면 `git -c user.name=... -c user.email=...`로 우회 커밋(2단계 참고).
 
