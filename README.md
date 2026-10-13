@@ -41,6 +41,13 @@ Claude Code 세션에서 아래를 순서대로 실행한다.
 /study:docs kafka
 ```
 
+**모노레포 모드**: 여러 주제를 한 레포(예: `study-docs/`)에서 관리하려면 루트 `CLAUDE.md`에 표식 `<!-- study-docs:monorepo -->`를 넣어 둔다. 그 레포 안에서 호출하면 `git init` 없이 `<주제-slug>/` 디렉토리에 문서를 만든다. 커밋은 `docs(<slug>): ...` 형식으로 하고, 루트 README 주제 인덱스에 한 줄을 추가한다.
+
+```
+cd ~/Workspace/study-docs
+/study:docs istio
+```
+
 ### `/study:toy`
 
 기술 주제 하나로 직접 만들어 보는 작은 프로젝트를 현재 디렉토리에 만든다. `docs`가 "문서로 이해하기"라면 `toy`는 "돌려 보며 체득하기"다.
