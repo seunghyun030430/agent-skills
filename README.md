@@ -14,6 +14,10 @@ Claude Code 세션에서 아래를 순서대로 실행한다.
 /plugin install study@seunghyun-skills
 ```
 
+```
+/plugin install tool@seunghyun-skills
+```
+
 분류(플러그인)별로 필요한 것만 설치한다. 설치 후 새 세션부터 스킬이 인식된다. 이미 추가한 마켓플레이스를 갱신하려면 `/plugin marketplace update`.
 
 ## 수록 스킬
@@ -24,6 +28,12 @@ Claude Code 세션에서 아래를 순서대로 실행한다.
 |---|---|---|
 | `docs` | `/study:docs` | 기술 주제를 조사해 번호 매긴 Markdown 학습 문서 레포로 정리 |
 | `toy` | `/study:toy` | 기술 주제를 직접 만들고 돌려 보며 체득하는 토이 프로젝트(마일스톤 + 깨뜨려 보기) |
+
+### `tool` — 작업 보조 도구
+
+| 스킬 | 호출 | 설명 |
+|---|---|---|
+| `mdfix` | `/tool:mdfix` | 마크다운 문서를 작성 규칙(문체·표·줄 길이·빈 줄)에 맞게 직접 교정하고 변경 내역을 보고 |
 
 ## 사용 예제
 
@@ -61,4 +71,16 @@ cd ~/Workspace/study-docs
 
 ```
 /study:toy kafka
+```
+
+### `/tool:mdfix`
+
+마크다운 문서를 작성 규칙에 맞게 직접 고치고, 무엇을 왜 고쳤는지 보고한다.
+
+- 인자로 파일·디렉터리·글롭을 받는다. 생략하면 git 변경분의 `.md`가 대상이다.
+- 대상이 5개를 넘으면 목록을 먼저 보여주고 진행 여부를 묻는다.
+- `/tool:mdfix`로 명시적으로 호출해야 동작한다.
+
+```
+/tool:mdfix docs/
 ```

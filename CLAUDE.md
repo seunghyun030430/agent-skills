@@ -10,6 +10,7 @@
 | 분류(플러그인) | 스킬 | 호출 |
 |---|---|---|
 | `study` | `docs`, `toy` | `/study:docs`, `/study:toy` |
+| `tool` | `mdfix` | `/tool:mdfix` |
 
 ## 구조
 

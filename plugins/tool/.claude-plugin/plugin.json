@@ -1,0 +1,13 @@
+{
+  "name": "tool",
+  "description": "작업 보조 도구 스킬 모음. 마크다운 문서를 작성 규칙에 맞게 교정하는 mdfix.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Seunghyun Lee"
+  },
+  "keywords": [
+    "tool",
+    "markdown",
+    "mdfix"
+  ]
+}
