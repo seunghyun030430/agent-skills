@@ -18,6 +18,10 @@ Claude Code 세션에서 아래를 순서대로 실행한다.
 /plugin install tool@seunghyun-skills
 ```
 
+```
+/plugin install write@seunghyun-skills
+```
+
 분류(플러그인)별로 필요한 것만 설치한다. 설치 후 새 세션부터 스킬이 인식된다. 이미 추가한 마켓플레이스를 갱신하려면 `/plugin marketplace update`.
 
 ## 수록 스킬
@@ -34,6 +38,12 @@ Claude Code 세션에서 아래를 순서대로 실행한다.
 | 스킬 | 호출 | 설명 |
 |---|---|---|
 | `mdfix` | `/tool:mdfix` | 마크다운 문서를 작성 규칙(문체·표·줄 길이·빈 줄)에 맞게 직접 교정하고 변경 내역을 보고 |
+
+### `write` — 글 작성
+
+| 스킬 | 호출 | 설명 |
+|---|---|---|
+| `report` | `/write:report` | 장애·문의 확인 결과를 증상·근거·결론 형식의 공유용 보고문으로 정리 |
 
 ## 사용 예제
 
@@ -83,4 +93,16 @@ cd ~/Workspace/study-docs
 
 ```
 /tool:mdfix docs/
+```
+
+### `/write:report`
+
+장애·문의·점검 확인 결과를 메신저나 업무 댓글에 붙일 보고문으로 정리한다.
+
+- "확인 요청주신 ~ 정리 드립니다."로 시작해 증상 → 근거 → 결론 순서로 쓴다.
+- 굵게·기울임·표·이모지 없이 `-` 목록만 쓴다.
+- `/write:report`로 명시적으로 호출해야 동작한다.
+
+```
+/write:report
 ```

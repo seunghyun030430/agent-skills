@@ -11,6 +11,7 @@
 |---|---|---|
 | `study` | `docs`, `toy` | `/study:docs`, `/study:toy` |
 | `tool` | `mdfix` | `/tool:mdfix` |
+| `write` | `report` | `/write:report` |
 
 ## 구조
 

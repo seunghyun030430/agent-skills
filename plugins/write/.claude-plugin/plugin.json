@@ -1,0 +1,12 @@
+{
+  "name": "write",
+  "description": "글 작성 스킬 모음. 운영 확인 결과를 공유용 보고문으로 정리하는 report.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Seunghyun Lee"
+  },
+  "keywords": [
+    "write",
+    "report"
+  ]
+}

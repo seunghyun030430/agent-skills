@@ -16,6 +16,11 @@
       "name": "tool",
       "source": "./plugins/tool",
       "description": "작업 보조 도구 스킬 — 마크다운 교정(mdfix)"
+    },
+    {
+      "name": "write",
+      "source": "./plugins/write",
+      "description": "글 작성 스킬 — 확인 결과 보고문(report)"
     }
   ]
 }
